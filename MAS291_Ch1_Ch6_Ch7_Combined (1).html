@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAS291 — Tổng Hợp Ch.1, Ch.6, Ch.7</title>
+<style>
+/* ═══════════════════════════════════════
+   DESIGN SYSTEM
+═══════════════════════════════════════ */
+:root {
+  --c1:   #1A5276;   /* Chapter 1 — deep blue */
+  --c1l:  #D6EAF8;
+  --c6:   #1A6B4A;   /* Chapter 6 — forest green */
+  --c6l:  #D5F5E3;
+  --c7:   #7D2D8C;   /* Chapter 7 — purple */
+  --c7l:  #F3E8FA;
+  --navy: #0D1B2A;
+  --dark: #1C2B3A;
+  --gold: #E8A500;
+  --sky:  #2196F3;
+  --bg:   #F0F4F8;
+  --card: #FFFFFF;
+  --text: #182636;
+  --muted:#5A7080;
+  --border:#C4D4E2;
+  --formula-bg:#E6F2FB;
+  --green2:#15916A;
+  --red2: #B83232;
+  --orange:#D45500;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.75;}
+
+/* ── TOP NAV ── */
+.topnav{
+  position:sticky;top:0;z-index:100;
+  background:var(--navy);
+  display:flex;align-items:center;gap:0;
+  box-shadow:0 2px 12px rgba(0,0,0,0.3);
+  overflow-x:auto;
+}
+.topnav a{
+  color:rgba(255,255,255,0.72);text-decoration:none;
+  padding:13px 20px;font-size:12px;font-weight:600;letter-spacing:0.5px;
+  white-space:nowrap;border-bottom:3px solid transparent;
+  transition:all .2s;
+}
+.topnav a:hover{color:#fff;background:rgba(255,255,255,0.08);}
+.topnav a.ch1{border-bottom-color:var(--c1);}
+.topnav a.ch6{border-bottom-color:var(--c6);}
+.topnav a.ch7{border-bottom-color:var(--c7);}
+.topnav a.act{color:#fff;}
+.topnav .sep{color:rgba(255,255,255,0.2);padding:0 4px;font-size:10px;}
+.topnav-brand{color:var(--gold);font-weight:800;font-size:13px;padding:13px 20px;border-right:1px solid rgba(255,255,255,0.1);flex-shrink:0;}
+
+/* ── HERO ── */
+.hero{
+  background:linear-gradient(135deg,#0D1B2A 0%,#1A3558 50%,#0E3D2A 100%);
+  color:#fff;padding:56px 40px 44px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='30' fill='none' stroke='%23ffffff' stroke-width='0.4' stroke-opacity='0.07'/%3E%3C/svg%3E");
+}
+.hero-inner{position:relative;max-width:1140px;margin:0 auto;}
+.hero-eyebrow{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.ch-badge{padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.ch-badge.b1{background:rgba(26,82,118,0.5);border:1px solid #5DADE2;color:#AED6F1;}
+.ch-badge.b6{background:rgba(26,107,74,0.5);border:1px solid #52BE80;color:#A9DFBF;}
+.ch-badge.b7{background:rgba(125,45,140,0.5);border:1px solid #AF7AC5;color:#D7BDE2;}
+.hero h1{font-size:2.7rem;font-weight:800;line-height:1.18;margin-bottom:12px;}
+.hero h1 em{font-style:normal;color:var(--gold);}
+.hero p.lead{font-size:1.05rem;color:rgba(255,255,255,0.78);max-width:680px;margin-bottom:28px;}
+.hero-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:700px;}
+.hero-card{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:12px;padding:16px 18px;}
+.hero-card .hc-label{font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:4px;}
+.hero-card .hc-title{font-weight:700;font-size:14px;color:#fff;}
+.hero-card .hc-sub{font-size:11px;color:rgba(255,255,255,0.55);margin-top:2px;}
+
+/* ── LAYOUT ── */
+.layout{display:flex;max-width:1200px;margin:0 auto;padding:32px 20px;gap:28px;align-items:flex-start;}
+
+/* ── SIDEBAR ── */
+.sidebar{width:270px;flex-shrink:0;position:sticky;top:52px;}
+.toc-box{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.06);margin-bottom:16px;}
+.toc-head{padding:12px 16px;font-size:11px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:#fff;}
+.toc-head.h1{background:var(--c1);}
+.toc-head.h6{background:var(--c6);}
+.toc-head.h7{background:var(--c7);}
+.toc-head.hall{background:var(--navy);}
+.toc-list{list-style:none;padding:8px 0;}
+.toc-list li a{display:flex;align-items:center;gap:8px;padding:7px 16px;color:var(--text);text-decoration:none;font-size:12.5px;transition:all .18s;border-left:3px solid transparent;}
+.toc-list li a:hover{background:var(--formula-bg);color:var(--sky);}
+.toc-list li a.t1:hover{border-left-color:var(--c1);}
+.toc-list li a.t6:hover{border-left-color:var(--c6);}
+.toc-list li a.t7:hover{border-left-color:var(--c7);}
+.toc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.dot1{background:var(--c1);}
+.dot6{background:var(--c6);}
+.dot7{background:var(--c7);}
+
+/* ── MAIN ── */
+.main{flex:1;min-width:0;}
+
+/* ── CHAPTER HEADER ── */
+.ch-header{border-radius:16px 16px 0 0;padding:22px 28px;color:#fff;display:flex;align-items:center;gap:16px;}
+.ch-header.ch1{background:linear-gradient(120deg,#1A5276,#2E86C1);}
+.ch-header.ch6{background:linear-gradient(120deg,#1A6B4A,#27AE60);}
+.ch-header.ch7{background:linear-gradient(120deg,#6B2080,#9B59B6);}
+.ch-header .ch-icon{width:52px;height:52px;background:rgba(255,255,255,0.2);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+.ch-header h2{font-size:1.3rem;font-weight:800;line-height:1.2;}
+.ch-header .ch-sub{font-size:12px;color:rgba(255,255,255,0.72);margin-top:3px;}
+.ch-header .ch-tags{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+.ch-tag{background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.3);color:#fff;padding:2px 10px;border-radius:12px;font-size:10px;font-weight:600;letter-spacing:0.5px;}
+
+/* ── SECTION ── */
+.section{background:var(--card);border:1px solid var(--border);margin-bottom:28px;box-shadow:0 2px 12px rgba(0,0,0,0.05);border-radius:0 0 16px 16px;}
+.section.solo{border-radius:16px;}
+.sec-body{padding:24px 28px;}
+
+/* ── INNER SECTIONS ── */
+.inner-sec{margin-bottom:28px;}
+.inner-sec:last-child{margin-bottom:0;}
+.inner-title{font-size:.95rem;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--border);}
+.inner-title .it-num{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:8px;color:#fff;font-size:12px;font-weight:700;flex-shrink:0;}
+.n1{background:var(--c1);}
+.n6{background:var(--c6);}
+.n7{background:var(--c7);}
+
+/* ── CARDS ── */
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;}
+.card-grid.three{grid-template-columns:1fr 1fr 1fr;}
+.card{background:var(--formula-bg);border-radius:10px;border:1px solid #A8CCEA;padding:14px 16px;}
+.card h4{font-size:12px;font-weight:700;color:var(--sky);margin-bottom:8px;text-transform:uppercase;letter-spacing:.4px;}
+.card.g{background:#E4F6F1;border-color:#7DCEA0;}
+.card.g h4{color:var(--c6);}
+.card.p{background:#F3E8FA;border-color:#C39BD3;}
+.card.p h4{color:var(--c7);}
+.card.r{background:#FCECEA;border-color:#F1948A;}
+.card.r h4{color:var(--red2);}
+
+/* ── FORMULA ── */
+.fbox{background:var(--navy);color:#fff;border-radius:10px;padding:16px 20px;margin:12px 0;font-family:'Courier New',monospace;font-size:13.5px;line-height:1.9;position:relative;}
+.fbox::after{content:'FORMULA';position:absolute;top:8px;right:12px;font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.2);font-family:'Segoe UI',sans-serif;}
+.fbox .fl{display:block;font-size:10px;color:var(--gold);font-family:'Segoe UI',sans-serif;font-weight:700;margin-bottom:6px;letter-spacing:.6px;text-transform:uppercase;}
+.fbox .fm{color:#7EC8E3;}
+.fbox .fv{font-size:11px;color:rgba(255,255,255,.45);font-family:'Segoe UI',sans-serif;margin-top:6px;}
+.fbox.green{background:linear-gradient(135deg,#0D3B28,#1A6B4A);}
+.fbox.purple{background:linear-gradient(135deg,#3D1054,#7D2D8C);}
+
+/* ── SYMBOL TABLE ── */
+.sym-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+.sym-table th{background:var(--navy);color:#fff;padding:10px 13px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.5px;}
+.sym-table td{padding:9px 13px;border-bottom:1px solid var(--border);vertical-align:top;}
+.sym-table tr:nth-child(even) td{background:#F4F8FC;}
+.sym-table tr:hover td{background:#E6F2FB;}
+.sym-table .sym{font-family:'Courier New',monospace;font-size:15px;font-weight:700;color:var(--navy);}
+.sym-table .ch-mark{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;}
+
+/* ── EXAMPLE ── */
+.ex-box{border-left:4px solid var(--orange);background:#FFF5F0;border-radius:0 10px 10px 0;padding:16px 20px;margin:14px 0;}
+.ex-box.eg{border-left-color:var(--c6);background:#F0FAF5;}
+.ex-box.ep{border-left-color:var(--c7);background:#F8F2FC;}
+.ex-title{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.ex-box .ex-title{color:var(--orange);}
+.ex-box.eg .ex-title{color:var(--c6);}
+.ex-box.ep .ex-title{color:var(--c7);}
+.steps{counter-reset:st;margin-top:10px;}
+.step{display:flex;gap:10px;margin-bottom:9px;align-items:flex-start;counter-increment:st;}
+.sn{min-width:24px;height:24px;background:var(--orange);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:2px;}
+.sn::before{content:counter(st);}
+.ex-box.eg .sn{background:var(--c6);}
+.ex-box.ep .sn{background:var(--c7);}
+.sb{font-size:13.5px;line-height:1.6;}
+.sb code{background:#FAEDE3;padding:1px 6px;border-radius:4px;font-size:12.5px;color:var(--navy);}
+.ex-box.eg .sb code{background:#DDF2E8;}
+.ex-box.ep .sb code{background:#EEE0F8;}
+
+/* ── ALERTS ── */
+.tip{background:#E4F6F1;border-left:4px solid var(--green2);border-radius:0 10px 10px 0;padding:11px 15px;margin:10px 0;font-size:13.5px;}
+.tip strong{color:var(--green2);}
+.warn{background:#FCECEA;border-left:4px solid var(--red2);border-radius:0 10px 10px 0;padding:11px 15px;margin:10px 0;font-size:13.5px;}
+.warn strong{color:var(--red2);}
+.note{background:#F3E8FA;border-left:4px solid var(--c7);border-radius:0 10px 10px 0;padding:11px 15px;margin:10px 0;font-size:13.5px;}
+.note strong{color:var(--c7);}
+
+/* ── CALC ── */
+.calc{background:#0D1B2A;color:#A8D8EA;border-radius:10px;padding:15px 20px;margin:12px 0;font-family:'Courier New',monospace;font-size:12.5px;line-height:1.9;}
+.calc .ct{color:#52BE80;font-family:'Segoe UI',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;margin-bottom:8px;}
+.calc .ck{color:#FFD700;}
+.calc .cc{color:#4A6070;}
+
+/* ── KW TAGS ── */
+.kw-box{background:#FEF8E0;border:1px dashed var(--gold);border-radius:10px;padding:12px 16px;margin:12px 0;}
+.kw-box h4{color:#9A7000;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;}
+.kw-tags{display:flex;flex-wrap:wrap;gap:7px;}
+.kt{padding:3px 11px;border-radius:16px;font-size:11.5px;font-weight:600;color:#fff;}
+.kt1{background:var(--c1);}
+.kt6{background:var(--c6);}
+.kt7{background:var(--c7);}
+.ktg{background:var(--gold);}
+
+/* ── BIG SUMMARY TABLE ── */
+.sum-table{width:100%;border-collapse:collapse;font-size:12.5px;margin:14px 0;}
+.sum-table th{background:var(--navy);color:#fff;padding:10px 13px;text-align:left;font-size:11px;font-weight:700;letter-spacing:.4px;}
+.sum-table td{padding:9px 13px;border-bottom:1px solid var(--border);vertical-align:top;}
+.sum-table tr:nth-child(even) td{background:#F4F8FC;}
+.sum-table tr:hover td{background:#E6F2FB;}
+.sum-table code{background:var(--formula-bg);padding:2px 5px;border-radius:4px;font-size:12px;color:var(--navy);}
+.ch-pill{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;color:#fff;}
+.p1{background:var(--c1);}
+.p6{background:var(--c6);}
+.p7{background:var(--c7);}
+
+/* ── DIVIDER ── */
+.div{height:1px;background:linear-gradient(to right,transparent,var(--border),transparent);margin:20px 0;}
+
+/* ── UTIL ── */
+h3{font-size:.95rem;font-weight:700;color:var(--navy);margin:16px 0 8px;}
+p{margin-bottom:9px;font-size:14px;}
+ul,ol{padding-left:18px;}
+ul li,ol li{margin-bottom:4px;font-size:14px;}
+
+@media(max-width:900px){
+  .layout{flex-direction:column;}
+  .sidebar{width:100%;position:relative;top:0;}
+  .card-grid,.card-grid.three{grid-template-columns:1fr;}
+  .hero h1{font-size:1.8rem;}
+  .hero-cards{grid-template-columns:1fr;}
+}
+@media(max-width:560px){.sec-body{padding:16px;}.hero{padding:30px 18px;}}
+</style>
+</head>
+<body>
+
+<!-- ══ TOP NAV ══ -->
+<nav class="topnav">
+  <div class="topnav-brand">MAS291</div>
+  <a href="#ch1" class="ch1 act">Ch.1 — Nền Tảng</a>
+  <span class="sep">│</span>
+  <a href="#ch6" class="ch6">Ch.6 — Thống Kê Mô Tả</a>
+  <span class="sep">│</span>
+  <a href="#ch7" class="ch7">Ch.7 — Suy Luận Thống Kê</a>
+  <span class="sep">│</span>
+  <a href="#symbols">Ký Hiệu</a>
+  <a href="#formulas">Công Thức</a>
+  <a href="#calc">Máy Tính</a>
+  <a href="#exercises">Bài Tập</a>
+  <a href="#keywords">Từ Khóa</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <span class="ch-badge b1">Chapter 1</span>
+      <span class="ch-badge b6">Chapter 6</span>
+      <span class="ch-badge b7">Chapter 7</span>
+    </div>
+    <h1>Nền Tảng · Mô Tả · <em>Suy Luận</em></h1>
+    <p class="lead">Ba chương liên kết chặt chẽ: Ch.1 xây nền tảng khái niệm → Ch.6 tóm tắt dữ liệu bằng số và đồ thị → Ch.7 dùng mẫu để suy luận về tổng thể. Toàn bộ công thức, ký hiệu, hướng dẫn máy tính fx-580VN X và bài tập vận dụng.</p>
+    <div class="hero-cards">
+      <div class="hero-card">
+        <div class="hc-label">Chapter 1</div>
+        <div class="hc-title">Probability Foundations</div>
+        <div class="hc-sub">Nền tảng xác suất & thu thập dữ liệu</div>
+      </div>
+      <div class="hero-card">
+        <div class="hc-label">Chapter 6</div>
+        <div class="hc-title">Descriptive Statistics</div>
+        <div class="hc-sub">Mean, Variance, Box Plot, Histogram</div>
+      </div>
+      <div class="hero-card">
+        <div class="hc-label">Chapter 7</div>
+        <div class="hc-title">Statistical Inference</div>
+        <div class="hc-sub">Sampling Dist. & Central Limit Theorem</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="layout">
+
+<!-- ══ SIDEBAR ══ -->
+<aside class="sidebar">
+  <div class="toc-box">
+    <div class="toc-head hall">📋 Mục Lục Tổng Hợp</div>
+    <ul class="toc-list">
+      <li><a href="#ch1" class="t1"><span class="toc-dot dot1"></span>Chapter 1 — Nền Tảng</a></li>
+      <li><a href="#c1-concepts" class="t1"><span class="toc-dot dot1"></span>&nbsp;&nbsp;Khái niệm cốt lõi</a></li>
+      <li><a href="#c1-methods" class="t1"><span class="toc-dot dot1"></span>&nbsp;&nbsp;Thu thập dữ liệu</a></li>
+      <li><a href="#c1-models" class="t1"><span class="toc-dot dot1"></span>&nbsp;&nbsp;Mô hình Cơ học & Thực nghiệm</a></li>
+      <li><a href="#c1-counting" class="t1"><span class="toc-dot dot1"></span>&nbsp;&nbsp;Kỹ thuật đếm</a></li>
+    </ul>
+  </div>
+  <div class="toc-box">
+    <div class="toc-head h6">📊 Chapter 6</div>
+    <ul class="toc-list">
+      <li><a href="#c6-mean" class="t6"><span class="toc-dot dot6"></span>Sample Mean & Variance</a></li>
+      <li><a href="#c6-median" class="t6"><span class="toc-dot dot6"></span>Median, Quartile, IQR</a></li>
+      <li><a href="#c6-stem" class="t6"><span class="toc-dot dot6"></span>Stem-and-Leaf</a></li>
+      <li><a href="#c6-hist" class="t6"><span class="toc-dot dot6"></span>Histogram</a></li>
+      <li><a href="#c6-box" class="t6"><span class="toc-dot dot6"></span>Box Plot & Outlier</a></li>
+    </ul>
+  </div>
+  <div class="toc-box">
+    <div class="toc-head h7">🔮 Chapter 7</div>
+    <ul class="toc-list">
+      <li><a href="#c7-intro" class="t7"><span class="toc-dot dot7"></span>Parameter vs Statistic</a></li>
+      <li><a href="#c7-sampling" class="t7"><span class="toc-dot dot7"></span>Sampling Distribution</a></li>
+      <li><a href="#c7-clt" class="t7"><span class="toc-dot dot7"></span>Central Limit Theorem</a></li>
+      <li><a href="#c7-diff" class="t7"><span class="toc-dot dot7"></span>Diff. of Sample Means</a></li>
+    </ul>
+  </div>
+  <div class="toc-box">
+    <div class="toc-head hall">🗂️ Tổng Hợp</div>
+    <ul class="toc-list">
+      <li><a href="#symbols"><span class="toc-dot" style="background:var(--gold)"></span>14 Ký Hiệu Quan Trọng</a></li>
+      <li><a href="#formulas"><span class="toc-dot" style="background:var(--gold)"></span>Bảng Công Thức</a></li>
+      <li><a href="#calc"><span class="toc-dot" style="background:var(--gold)"></span>Hướng Dẫn fx-580VN X</a></li>
+      <li><a href="#exercises"><span class="toc-dot" style="background:var(--gold)"></span>Bài Tập Vận Dụng</a></li>
+      <li><a href="#keywords"><span class="toc-dot" style="background:var(--gold)"></span>Từ Khóa Nhận Dạng</a></li>
+    </ul>
+  </div>
+</aside>
+
+<!-- ══ MAIN ══ -->
+<main class="main">
+
+<!-- ═══════════════════════════
+     CHAPTER 1
+═══════════════════════════ -->
+<div id="ch1">
+  <div class="ch-header ch1">
+    <div class="ch-icon">🎲</div>
+    <div>
+      <h2>Chapter 1 — Nền Tảng Xác Suất & Thống Kê</h2>
+      <div class="ch-sub">Probability & Statistics Foundations</div>
+      <div class="ch-tags">
+        <span class="ch-tag">Population & Sample</span>
+        <span class="ch-tag">3 Data Methods</span>
+        <span class="ch-tag">Mechanistic vs Empirical</span>
+        <span class="ch-tag">Counting Techniques</span>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="sec-body">
+
+      <!-- C1: CORE CONCEPTS -->
+      <div class="inner-sec" id="c1-concepts">
+        <div class="inner-title"><span class="it-num n1">1</span>Khái Niệm Cốt Lõi — Core Concepts</div>
+        <p>Thống kê = <strong>thu thập → trình bày → phân tích → ra quyết định</strong> dựa trên dữ liệu có biến thiên ngẫu nhiên.</p>
+        <div class="card-grid">
+          <div class="card">
+            <h4>👥 Population (Tổng Thể)</h4>
+            <p style="font-size:13px;">Toàn bộ đối tượng quan tâm. Tham số tổng thể: <strong>μ</strong> (mean), <strong>σ²</strong> (variance), <strong>p</strong> (proportion).</p>
+            <p style="font-size:12px;color:#666;">VD: Toàn bộ linh kiện xuất xưởng trong tháng</p>
+          </div>
+          <div class="card">
+            <h4>🔍 Sample (Mẫu)</h4>
+            <p style="font-size:13px;">Tập con được chọn ra. Thống kê mẫu: <strong>x̄</strong> (mean), <strong>S²</strong> (variance), <strong>p̂</strong> (proportion).</p>
+            <p style="font-size:12px;color:#666;">VD: 50 linh kiện kiểm tra ngẫu nhiên</p>
+          </div>
+        </div>
+        <div class="fbox">
+          <span class="fl">Mô hình biến ngẫu nhiên (Random Variable Model)</span>
+          <span class="fm">X = μ + ε</span>
+          <div class="fv">μ = hằng số (mean thực) | ε = nhiễu ngẫu nhiên (random error)</div>
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- C1: METHODS -->
+      <div class="inner-sec" id="c1-methods">
+        <div class="inner-title"><span class="it-num n1">2</span>Ba Phương Pháp Thu Thập Dữ Liệu</div>
+        <div class="card-grid three">
+          <div class="card">
+            <h4>📁 Retrospective Study</h4>
+            <p style="font-size:13px;"><strong>Hồi cứu</strong> — dùng dữ liệu lịch sử có sẵn.</p>
+            <ul style="font-size:12px;">
+              <li>✅ Nhanh, rẻ</li>
+              <li>❌ Không kiểm soát chất lượng data</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>👁️ Observational Study</h4>
+            <p style="font-size:13px;"><strong>Quan sát</strong> — không can thiệp vào quá trình.</p>
+            <ul style="font-size:12px;">
+              <li>✅ Phản ánh thực tế</li>
+              <li>❌ Không xác định nhân quả</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>🧪 Designed Experiment</h4>
+            <p style="font-size:13px;"><strong>Thí nghiệm</strong> — chủ động thay đổi biến kiểm soát.</p>
+            <ul style="font-size:12px;">
+              <li>✅ Xác định nhân quả</li>
+              <li>❌ Tốn thời gian, chi phí</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tip">
+          <strong>🔑 Nhận dạng nhanh:</strong> "historical/past records" → Retrospective | "surveyed/poll" → Observational | "treatment/control group/placebo" → Designed Experiment
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- C1: MODELS -->
+      <div class="inner-sec" id="c1-models">
+        <div class="inner-title"><span class="it-num n1">3</span>Mô Hình Cơ Học & Thực Nghiệm</div>
+        <div class="card-grid">
+          <div class="card">
+            <h4>⚙️ Mechanistic Model</h4>
+            <p style="font-size:13px;">Từ nguyên lý vật lý/hóa học. VD: <strong>I = E/R + ε</strong> (Định luật Ohm)</p>
+          </div>
+          <div class="card">
+            <h4>📈 Empirical Model</h4>
+            <p style="font-size:13px;">Từ dữ liệu quan sát. VD: <strong>ŷ = β̂₀ + β̂₁x</strong> (Regression)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- C1: COUNTING -->
+      <div class="inner-sec" id="c1-counting">
+        <div class="inner-title"><span class="it-num n1">4</span>Kỹ Thuật Đếm — Counting Techniques</div>
+        <div class="fbox">
+          <span class="fl">Quy Tắc Nhân (Multiplication Rule)</span>
+          <span class="fm">Tổng số cách = n₁ × n₂ × ... × nₖ</span>
+          <div class="fv">Mỗi bước i có nᵢ cách thực hiện độc lập</div>
+        </div>
+        <div class="fbox">
+          <span class="fl">Hoán Vị — Permutation P(n,r) — THỨ TỰ QUAN TRỌNG</span>
+          <span class="fm">P(n,r) = n! / (n−r)!&nbsp;&nbsp;&nbsp;&nbsp;[AB ≠ BA]</span>
+          <div class="fv">Chọn r từ n, thứ tự tạo ra kết quả khác nhau</div>
+        </div>
+        <div class="fbox">
+          <span class="fl">Tổ Hợp — Combination C(n,r) — THỨ TỰ KHÔNG QUAN TRỌNG</span>
+          <span class="fm">C(n,r) = n! / [r!(n−r)!]&nbsp;&nbsp;&nbsp;&nbsp;[AB = BA]</span>
+          <div class="fv">Chọn r từ n, không quan tâm thứ tự | C(n,r) = C(n, n−r)</div>
+        </div>
+        <div class="card-grid">
+          <div class="card">
+            <h4>✅ Dùng Permutation khi:</h4>
+            <ul style="font-size:13px;">
+              <li>"xếp hàng", "sắp xếp", "rank"</li>
+              <li>"phân công vị trí"</li>
+              <li>Thứ tự tạo ra kết quả khác</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4>✅ Dùng Combination khi:</h4>
+            <ul style="font-size:13px;">
+              <li>"chọn nhóm", "bốc thăm", "select"</li>
+              <li>"committee", "sample"</li>
+              <li>Thứ tự KHÔNG tạo ra kết quả khác</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     CHAPTER 6
+═══════════════════════════ -->
+<div id="ch6">
+  <div class="ch-header ch6">
+    <div class="ch-icon">📊</div>
+    <div>
+      <h2>Chapter 6 — Thống Kê Mô Tả</h2>
+      <div class="ch-sub">Descriptive Statistics — Tóm tắt dữ liệu bằng số và đồ thị</div>
+      <div class="ch-tags">
+        <span class="ch-tag">Mean · Variance · StdDev</span>
+        <span class="ch-tag">Median · Quartile · IQR</span>
+        <span class="ch-tag">Stem-Leaf · Histogram</span>
+        <span class="ch-tag">Box Plot · Outlier</span>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="sec-body">
+
+      <!-- C6: MEAN VARIANCE -->
+      <div class="inner-sec" id="c6-mean">
+        <div class="inner-title"><span class="it-num n6">1</span>Sample Mean & Variance (Trung bình & Phương sai mẫu)</div>
+        <div class="fbox green">
+          <span class="fl">SAMPLE MEAN — x̄ (x-bar)</span>
+          <span class="fm">x̄ = (1/n) · Σxᵢ = (x₁+x₂+...+xₙ)/n</span>
+          <div class="fv">n = cỡ mẫu | xᵢ = quan sát thứ i</div>
+        </div>
+        <div class="fbox green">
+          <span class="fl">SAMPLE VARIANCE — S² &amp; STANDARD DEVIATION — S</span>
+          <span class="fm">
+            S² = Σ(xᵢ−x̄)² / (n−1)<br>
+            Shortcut: S² = [Σxᵢ² − (Σxᵢ)²/n] / (n−1)<br>
+            S = √S²
+          </span>
+          <div class="fv">Chia (n−1) không phải n → unbiased estimator | S = độ lệch chuẩn mẫu</div>
+        </div>
+        <div class="warn">
+          <strong>⚠️ Thường gặp sai lầm:</strong> Chia n → variance của tổng thể σ². Chia (n−1) → variance của MẪU S². Trong bài thi luôn dùng <strong>(n−1)</strong> trừ khi đề ghi rõ "population variance".
+        </div>
+        <div class="ex-box eg">
+          <div class="ex-title">📝 Ví dụ 6.1 — Tính x̄ và S</div>
+          <p style="font-size:13px;">Dữ liệu lực kéo (n=8): <strong>12.6, 12.9, 13.4, 12.3, 13.6, 13.5, 12.6, 13.1</strong></p>
+          <div class="steps">
+            <div class="step"><div class="sn"></div><div class="sb">Σxᵢ = 104.0 → x̄ = 104.0/8 = <code>13.0 pounds</code></div></div>
+            <div class="step"><div class="sn"></div><div class="sb">Σxᵢ² = 1353.60</div></div>
+            <div class="step"><div class="sn"></div><div class="sb">S² = [1353.60 − (104)²/8] / 7 = [1353.60 − 1352.0]/7 = <code>0.2286</code></div></div>
+            <div class="step"><div class="sn"></div><div class="sb">S = √0.2286 = <code>0.478 pounds</code></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- C6: MEDIAN QUARTILE -->
+      <div class="inner-sec" id="c6-median">
+        <div class="inner-title"><span class="it-num n6">2</span>Median, Quartile, IQR & Outlier Rule</div>
+        <div class="fbox green">
+          <span class="fl">MEDIAN — TRUNG VỊ</span>
+          <span class="fm">
+            n lẻ: Median = x[(n+1)/2]<br>
+            n chẵn: Median = (x[n/2] + x[n/2+1]) / 2
+          </span>
+          <div class="fv">Sắp xếp dữ liệu tăng dần trước!</div>
+        </div>
+        <div class="fbox green">
+          <span class="fl">QUARTILE & IQR</span>
+          <span class="fm">
+            Q1 = vị trí (n+1)/4&nbsp;&nbsp;&nbsp;(25th percentile)<br>
+            Q2 = Median&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(50th percentile)<br>
+            Q3 = vị trí 3(n+1)/4&nbsp;(75th percentile)<br>
+            IQR = Q3 − Q1<br>
+            Range r = max − min
+          </span>
+          <div class="fv">Nội suy nếu vị trí không phải số nguyên</div>
+        </div>
+        <div class="fbox green">
+          <span class="fl">OUTLIER DETECTION RULE (Box Plot)</span>
+          <span class="fm">
+            Outlier (○):  ngoài [Q1−1.5·IQR , Q3+1.5·IQR]<br>
+            Extreme (*):  ngoài [Q1−3·IQR , Q3+3·IQR]
+          </span>
+        </div>
+        <div class="ex-box eg">
+          <div class="ex-title">📝 Ví dụ — Tính Quartile (n=80)</div>
+          <div class="steps">
+            <div class="step"><div class="sn"></div><div class="sb">Vị trí Q1 = (80+1)/4 = 20.25 → nội suy giữa obs thứ 20 và 21 → <code>Q1 = 143.5</code></div></div>
+            <div class="step"><div class="sn"></div><div class="sb">Vị trí Q3 = 3×81/4 = 60.75 → nội suy giữa obs thứ 60 và 61 → <code>Q3 = 181.0</code></div></div>
+            <div class="step"><div class="sn"></div><div class="sb">IQR = 181.0 − 143.5 = <code>37.5</code></div></div>
+            <div class="step"><div class="sn"></div><div class="sb">Outlier upper bound = 181 + 1.5×37.5 = <code>237.25</code> → điểm 245 là outlier!</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- C6: STEM LEAF -->
+      <div class="inner-sec" id="c6-stem">
+        <div class="inner-title"><span class="it-num n6">3</span>Stem-and-Leaf Diagram</div>
+        <div class="card-grid">
+          <div class="card g">
+            <h4>Cách Xây Dựng</h4>
+            <ol style="font-size:13px;padding-left:14px;">
+              <li>Stem = chữ số hàng chục (hoặc cao hơn)</li>
+              <li>Leaf = chữ số hàng đơn vị</li>
+              <li>Liệt kê stems tăng dần, gắn leaves</li>
+              <li>Sắp xếp leaves trong mỗi stem</li>
+            </ol>
+          </div>
+          <div class="card g">
+            <h4>Khi nào dùng?</h4>
+            <ul style="font-size:13px;">
+              <li>n ≤ 100 (dữ liệu vừa)</li>
+              <li>Muốn giữ nguyên từng giá trị</li>
+              <li>Tìm median/quartile bằng tay</li>
+              <li>Thấy hình dạng + từng điểm cùng lúc</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tip">
+          <strong>💡 Chia đôi stem:</strong> Quá ít stems → chia: <strong>5L</strong> (lá 0–4) và <strong>5U</strong> (lá 5–9). Mục tiêu 5–20 stems.
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- C6: HISTOGRAM -->
+      <div class="inner-sec" id="c6-hist">
+        <div class="inner-title"><span class="it-num n6">4</span>Histogram & Frequency Distribution</div>
+        <div class="card-grid">
+          <div class="card g">
+            <h4>Xây Dựng Histogram</h4>
+            <ol style="font-size:13px;padding-left:14px;">
+              <li>Số bins: k ≈ √n</li>
+              <li>Bin width = (max−min)/k</li>
+              <li>Đếm tần số mỗi bin</li>
+              <li>Vẽ cột (chiều cao = tần số)</li>
+            </ol>
+          </div>
+          <div class="card g">
+            <h4>Đọc Hình Dạng</h4>
+            <ul style="font-size:13px;">
+              <li><strong>Symmetric:</strong> Mean ≈ Median</li>
+              <li><strong>Right-skewed:</strong> đuôi phải → Mean &gt; Median</li>
+              <li><strong>Left-skewed:</strong> đuôi trái → Mean &lt; Median</li>
+              <li><strong>Bimodal:</strong> 2 đỉnh → có thể 2 nhóm</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- C6: BOXPLOT -->
+      <div class="inner-sec" id="c6-box">
+        <div class="inner-title"><span class="it-num n6">5</span>Box Plot — 5-Number Summary</div>
+        <div class="fbox green">
+          <span class="fl">5-NUMBER SUMMARY</span>
+          <span class="fm">Min | Q1 | Median | Q3 | Max</span>
+          <div class="fv">Box = Q1 đến Q3 | Đường giữa = Median | Whiskers = đến giới hạn outlier</div>
+        </div>
+        <div class="tip">
+          <strong>💡 Đọc Box Plot:</strong> Box dài → phân tán nhiều | Median lệch trong box → skewed | Whisker dài 1 phía → đuôi phân phối về phía đó
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     CHAPTER 7
+═══════════════════════════ -->
+<div id="ch7">
+  <div class="ch-header ch7">
+    <div class="ch-icon">🔮</div>
+    <div>
+      <h2>Chapter 7 — Suy Luận Thống Kê</h2>
+      <div class="ch-sub">Sampling Distributions & Central Limit Theorem</div>
+      <div class="ch-tags">
+        <span class="ch-tag">Parameter vs Statistic</span>
+        <span class="ch-tag">Sampling Distribution</span>
+        <span class="ch-tag">Central Limit Theorem</span>
+        <span class="ch-tag">Diff. of Means</span>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="sec-body">
+
+      <!-- C7: INTRO -->
+      <div class="inner-sec" id="c7-intro">
+        <div class="inner-title"><span class="it-num n7">1</span>Parameter vs Statistic — Tham số & Thống kê</div>
+        <div class="card-grid">
+          <div class="card p">
+            <h4>🏛️ Parameter (Tham số tổng thể)</h4>
+            <p style="font-size:13px;">Giá trị <strong>cố định, thường không biết</strong> mô tả tổng thể.</p>
+            <ul style="font-size:13px;">
+              <li><strong>μ</strong> — Population mean</li>
+              <li><strong>σ²</strong> — Population variance</li>
+              <li><strong>σ</strong> — Population std dev</li>
+              <li><strong>p</strong> — Population proportion</li>
+            </ul>
+          </div>
+          <div class="card p">
+            <h4>📊 Statistic (Thống kê mẫu)</h4>
+            <p style="font-size:13px;">Giá trị <strong>tính từ mẫu</strong>, dùng để ước lượng tham số.</p>
+            <ul style="font-size:13px;">
+              <li><strong>x̄</strong> — Sample mean → ước lượng μ</li>
+              <li><strong>S²</strong> — Sample variance → ước lượng σ²</li>
+              <li><strong>S</strong> — Sample std dev → ước lượng σ</li>
+              <li><strong>p̂</strong> — Sample proportion → ước lượng p</li>
+            </ul>
+          </div>
+        </div>
+        <div class="note">
+          <strong>💜 Mối liên kết Ch.6 → Ch.7:</strong> Ch.6 tính x̄, S², S, p̂ từ dữ liệu mẫu. Ch.7 hỏi: "x̄ đó có ý nghĩa gì về μ của tổng thể không?" → Cần biết phân phối của x̄!
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- C7: SAMPLING DIST -->
+      <div class="inner-sec" id="c7-sampling">
+        <div class="inner-title"><span class="it-num n7">2</span>Sampling Distribution of x̄</div>
+        <p>Nếu lấy <strong>nhiều mẫu kích thước n</strong> từ cùng một tổng thể, mỗi mẫu cho một x̄ khác nhau. Tập hợp tất cả x̄ đó tạo thành <strong>sampling distribution</strong>.</p>
+        <div class="fbox purple">
+          <span class="fl">PHÂN PHỐI CỦA x̄ (Sampling Distribution of Sample Mean)</span>
+          <span class="fm">
+            Nếu X ~ N(μ, σ²) hoặc n đủ lớn:<br>
+            E(x̄) = μ<br>
+            V(x̄) = σ²/n<br>
+            σ_{x̄} = σ/√n  (Standard Error — Sai số chuẩn)<br><br>
+            x̄ ~ N(μ, σ²/n)
+          </span>
+          <div class="fv">σ/√n gọi là Standard Error (SE) của x̄ — đo độ biến thiên của x̄ giữa các mẫu</div>
+        </div>
+        <div class="fbox purple">
+          <span class="fl">CHUẨN HÓA x̄ (Standardize Sample Mean)</span>
+          <span class="fm">Z = (x̄ − μ) / (σ/√n) ~ N(0,1)</span>
+          <div class="fv">Dùng Z để tính xác suất về x̄</div>
+        </div>
+        <div class="tip">
+          <strong>💡 So sánh quan trọng:</strong><br>
+          — X đơn lẻ: Z = (X − μ) / σ &nbsp;&nbsp;&nbsp; (độ lệch chuẩn dân số)<br>
+          — x̄ của mẫu: Z = (x̄ − μ) / (σ/√n) &nbsp;&nbsp;&nbsp; (standard error = σ/√n)
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- C7: CLT -->
+      <div class="inner-sec" id="c7-clt">
+        <div class="inner-title"><span class="it-num n7">3</span>Central Limit Theorem — Định Lý Giới Hạn Trung Tâm</div>
+        <div class="fbox purple">
+          <span class="fl">CENTRAL LIMIT THEOREM (CLT) — ĐỊNH LÝ QUAN TRỌNG NHẤT</span>
+          <span class="fm">
+            Nếu X₁, X₂, ..., Xₙ là mẫu ngẫu nhiên từ bất kỳ phân phối nào<br>
+            với mean μ và variance σ² (hữu hạn),<br>
+            thì khi n đủ lớn (n ≥ 30):<br><br>
+            x̄ ≈ N(μ, σ²/n)<br><br>
+            Hay: Z = (x̄ − μ)/(σ/√n) ≈ N(0,1)
+          </span>
+          <div class="fv">Tổng thể có thể là bất kỳ dạng phân phối nào — x̄ vẫn xấp xỉ chuẩn khi n lớn!</div>
+        </div>
+        <div class="card-grid">
+          <div class="card p">
+            <h4>✅ Khi n lớn (n ≥ 30)</h4>
+            <ul style="font-size:13px;">
+              <li>CLT áp dụng được</li>
+              <li>x̄ ≈ Normal dù tổng thể không chuẩn</li>
+              <li>Dùng Z = (x̄−μ)/(σ/√n)</li>
+            </ul>
+          </div>
+          <div class="card p">
+            <h4>✅ Khi tổng thể đã Normal</h4>
+            <ul style="font-size:13px;">
+              <li>Áp dụng được với mọi n</li>
+              <li>x̄ ~ Normal chính xác</li>
+              <li>Không cần n ≥ 30</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-box ep">
+          <div class="ex-title">📝 Ví dụ 7.1 — Water Taxi Safety</div>
+          <p style="font-size:13px;">Cân nặng nam giới ~ N(172 lb, 29²). Taxi chứa tối đa 3500 lb (20 người).</p>
+          <div class="steps">
+            <div class="step"><div class="sn"></div><div class="sb"><strong>(a) P(X &gt; 175) — 1 người ngẫu nhiên:</strong><br>Z = (175−172)/29 = <code>0.103</code> → P(Z &gt; 0.103) = 1−Φ(0.103) = <code>0.4590</code></div></div>
+            <div class="step"><div class="sn"></div><div class="sb"><strong>(b) P(x̄ &gt; 175) — 20 người (tổng &gt; 3500 lb):</strong><br>σ_{x̄} = 29/√20 = <code>6.485</code></div></div>
+            <div class="step"><div class="sn"></div><div class="sb">Z = (175−172)/6.485 = <code>0.463</code></div></div>
+            <div class="step"><div class="sn"></div><div class="sb">P(x̄ &gt; 175) = 1−Φ(0.463) = <code>0.3217</code> → 32.17% — RỦI RO RẤT CAO!</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="div"></div>
+
+      <!-- C7: DIFF MEANS -->
+      <div class="inner-sec" id="c7-diff">
+        <div class="inner-title"><span class="it-num n7">4</span>Sampling Distribution of Difference of Means</div>
+        <div class="fbox purple">
+          <span class="fl">PHÂN PHỐI CỦA (x̄₁ − x̄₂)</span>
+          <span class="fm">
+            E(x̄₁ − x̄₂) = μ₁ − μ₂<br>
+            V(x̄₁ − x̄₂) = σ₁²/n₁ + σ₂²/n₂<br><br>
+            Z = [(x̄₁ − x̄₂) − (μ₁−μ₂)] / √(σ₁²/n₁ + σ₂²/n₂)  ~ N(0,1)
+          </span>
+          <div class="fv">Dùng khi so sánh mean của 2 tổng thể độc lập</div>
+        </div>
+        <div class="ex-box ep">
+          <div class="ex-title">📝 Ví dụ — So Sánh 2 Ao Cá (từ slide 7)</div>
+          <p style="font-size:13px;">2 ao cá, mỗi ao lấy mẫu n=20. Tính x̄, S², S, p̂ (tỷ lệ cá &gt; 2kg) rồi so sánh.</p>
+          <div class="steps">
+            <div class="step"><div class="sn"></div><div class="sb">Ao 1: x̄₁ = Σxᵢ/20 &nbsp;&nbsp; Ao 2: x̄₂ = Σxᵢ/20</div></div>
+            <div class="step"><div class="sn"></div><div class="sb">S₁², S₂² dùng công thức shortcut</div></div>
+            <div class="step"><div class="sn"></div><div class="sb">p̂₁ = (số cá &gt; 2kg trong S1)/20 &nbsp;&nbsp; p̂₂ tương tự</div></div>
+            <div class="step"><div class="sn"></div><div class="sb">So sánh: ao nào có x̄ lớn hơn? S nhỏ hơn (ổn định hơn)? p̂ cao hơn?</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     14 KÝ HIỆU
+═══════════════════════════ -->
+<div class="section solo" id="symbols" style="margin-top:8px;">
+  <div class="sec-body">
+    <div class="inner-title" style="font-size:1.1rem;"><span class="it-num" style="background:var(--gold);width:32px;height:32px;">∑</span>14 Ký Hiệu Quan Trọng — Symbols Reference</div>
+    <table class="sym-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Ký Hiệu</th>
+          <th>Tên Tiếng Anh</th>
+          <th>Tên Tiếng Việt</th>
+          <th>Công Thức</th>
+          <th>Chương</th>
+          <th>Ý Nghĩa Thực Tế</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><span class="sym">μ</span></td>
+          <td>Population Mean</td>
+          <td>Trung bình tổng thể</td>
+          <td><code>μ = (1/N)·Σxᵢ</code></td>
+          <td><span class="ch-pill p7">Ch.7</span></td>
+          <td>Giá trị trung bình thực của toàn bộ tổng thể</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><span class="sym">x̄</span></td>
+          <td>Sample Mean</td>
+          <td>Trung bình mẫu</td>
+          <td><code>x̄ = (1/n)·Σxᵢ</code></td>
+          <td><span class="ch-pill p6">Ch.6</span></td>
+          <td>Ước lượng μ từ mẫu n quan sát</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><span class="sym">σ²</span></td>
+          <td>Population Variance</td>
+          <td>Phương sai tổng thể</td>
+          <td><code>σ² = (1/N)·Σ(xᵢ−μ)²</code></td>
+          <td><span class="ch-pill p7">Ch.7</span></td>
+          <td>Mức độ phân tán thực của tổng thể</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><span class="sym">S²</span></td>
+          <td>Sample Variance</td>
+          <td>Phương sai mẫu</td>
+          <td><code>S² = Σ(xᵢ−x̄)²/(n−1)</code></td>
+          <td><span class="ch-pill p6">Ch.6</span></td>
+          <td>Ước lượng σ² — LUÔN chia (n−1)</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><span class="sym">σ</span></td>
+          <td>Population Std Dev</td>
+          <td>Độ lệch chuẩn tổng thể</td>
+          <td><code>σ = √σ²</code></td>
+          <td><span class="ch-pill p7">Ch.7</span></td>
+          <td>Độ phân tán thực, cùng đơn vị với X</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><span class="sym">S</span></td>
+          <td>Sample Std Dev</td>
+          <td>Độ lệch chuẩn mẫu</td>
+          <td><code>S = √S²</code></td>
+          <td><span class="ch-pill p6">Ch.6</span></td>
+          <td>Ước lượng σ từ mẫu</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><span class="sym">p</span></td>
+          <td>Population Proportion</td>
+          <td>Tỷ lệ tổng thể</td>
+          <td>p = X/N</td>
+          <td><span class="ch-pill p7">Ch.7</span></td>
+          <td>Tỷ lệ thực trong toàn bộ tổng thể</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td><span class="sym">p̂</span></td>
+          <td>Sample Proportion</td>
+          <td>Tỷ lệ mẫu</td>
+          <td><code>p̂ = x/n</code></td>
+          <td><span class="ch-pill p6">Ch.6</span> <span class="ch-pill p7">Ch.7</span></td>
+          <td>Ước lượng p từ mẫu (VD: tỷ lệ cá &gt; 2kg)</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td><span class="sym">n</span></td>
+          <td>Sample Size</td>
+          <td>Cỡ mẫu</td>
+          <td>—</td>
+          <td><span class="ch-pill p6">Ch.6</span> <span class="ch-pill p7">Ch.7</span></td>
+          <td>Số quan sát trong mẫu</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td><span class="sym">σ/√n</span></td>
+          <td>Standard Error</td>
+          <td>Sai số chuẩn của x̄</td>
+          <td><code>SE = σ/√n</code></td>
+          <td><span class="ch-pill p7">Ch.7</span></td>
+          <td>Độ biến thiên của x̄ khi lấy nhiều mẫu</td>
+        </tr>
+        <tr>
+          <td>11</td>
+          <td><span class="sym">Q1,Q2,Q3</span></td>
+          <td>Quartiles</td>
+          <td>Tứ phân vị</td>
+          <td>Vị trí (n+1)/4, (n+1)/2, 3(n+1)/4</td>
+          <td><span class="ch-pill p6">Ch.6</span></td>
+          <td>Chia dữ liệu thành 4 phần bằng nhau</td>
+        </tr>
+        <tr>
+          <td>12</td>
+          <td><span class="sym">IQR</span></td>
+          <td>Interquartile Range</td>
+          <td>Khoảng tứ phân vị</td>
+          <td><code>IQR = Q3 − Q1</code></td>
+          <td><span class="ch-pill p6">Ch.6</span></td>
+          <td>Phân tán của 50% dữ liệu giữa</td>
+        </tr>
+        <tr>
+          <td>13</td>
+          <td><span class="sym">r</span></td>
+          <td>Range</td>
+          <td>Khoảng biến thiên</td>
+          <td><code>r = max − min</code></td>
+          <td><span class="ch-pill p6">Ch.6</span></td>
+          <td>Khoảng trải rộng nhất của dữ liệu</td>
+        </tr>
+        <tr>
+          <td>14</td>
+          <td><span class="sym">Z</span></td>
+          <td>Z-score / Standard Normal</td>
+          <td>Điểm chuẩn hóa</td>
+          <td><code>Z = (x̄−μ)/(σ/√n)</code></td>
+          <td><span class="ch-pill p7">Ch.7</span></td>
+          <td>Số std error cách xa mean; tra bảng N(0,1)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     BẢNG CÔNG THỨC TỔNG HỢP
+═══════════════════════════ -->
+<div class="section solo" id="formulas">
+  <div class="sec-body">
+    <div class="inner-title" style="font-size:1.1rem;"><span class="it-num" style="background:var(--sky);width:32px;height:32px;">f</span>Bảng Công Thức Tổng Hợp 3 Chương</div>
+    <table class="sum-table">
+      <thead>
+        <tr><th>Chương</th><th>Đại lượng</th><th>Công thức</th><th>Điều kiện</th><th>Ý nghĩa</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="ch-pill p1">Ch.1</span></td><td>Multiplication Rule</td><td><code>n₁×n₂×...×nₖ</code></td><td>k bước độc lập</td><td>Tổng số cách thực hiện k bước</td></tr>
+        <tr><td><span class="ch-pill p1">Ch.1</span></td><td>Permutation P(n,r)</td><td><code>n!/(n−r)!</code></td><td>Thứ tự quan trọng</td><td>Chọn r từ n, AB≠BA</td></tr>
+        <tr><td><span class="ch-pill p1">Ch.1</span></td><td>Combination C(n,r)</td><td><code>n!/[r!(n−r)!]</code></td><td>Thứ tự không quan trọng</td><td>Chọn r từ n, AB=BA</td></tr>
+        <tr><td><span class="ch-pill p1">Ch.1</span></td><td>Regression (Empirical)</td><td><code>ŷ = β̂₀ + β̂₁x</code></td><td>—</td><td>Dự đoán y từ x dựa trên dữ liệu</td></tr>
+        <tr><td><span class="ch-pill p6">Ch.6</span></td><td>Sample Mean x̄</td><td><code>(1/n)·Σxᵢ</code></td><td>—</td><td>Ước lượng μ từ mẫu</td></tr>
+        <tr><td><span class="ch-pill p6">Ch.6</span></td><td>Sample Variance S²</td><td><code>Σ(xᵢ−x̄)²/(n−1)</code></td><td>Chia (n−1)!</td><td>Ước lượng σ²</td></tr>
+        <tr><td><span class="ch-pill p6">Ch.6</span></td><td>Shortcut S²</td><td><code>[Σxᵢ²−(Σxᵢ)²/n]/(n−1)</code></td><td>—</td><td>Tính nhanh không cần x̄ trước</td></tr>
+        <tr><td><span class="ch-pill p6">Ch.6</span></td><td>Sample Std Dev S</td><td><code>√S²</code></td><td>—</td><td>Độ lệch chuẩn mẫu</td></tr>
+        <tr><td><span class="ch-pill p6">Ch.6</span></td><td>Range</td><td><code>max − min</code></td><td>—</td><td>Khoảng biến thiên</td></tr>
+        <tr><td><span class="ch-pill p6">Ch.6</span></td><td>IQR</td><td><code>Q3 − Q1</code></td><td>—</td><td>Phân tán 50% giữa</td></tr>
+        <tr><td><span class="ch-pill p6">Ch.6</span></td><td>Outlier bound</td><td><code>Q1−1.5·IQR &amp; Q3+1.5·IQR</code></td><td>—</td><td>Ngưỡng phát hiện giá trị bất thường</td></tr>
+        <tr><td><span class="ch-pill p7">Ch.7</span></td><td>Standard Error</td><td><code>σ/√n</code></td><td>—</td><td>Độ biến thiên của x̄</td></tr>
+        <tr><td><span class="ch-pill p7">Ch.7</span></td><td>Z của x̄</td><td><code>(x̄−μ)/(σ/√n)</code></td><td>CLT hoặc X~Normal</td><td>Chuẩn hóa x̄ để tính xác suất</td></tr>
+        <tr><td><span class="ch-pill p7">Ch.7</span></td><td>Z của 2 mẫu</td><td><code>(x̄₁−x̄₂−(μ₁−μ₂))/√(σ₁²/n₁+σ₂²/n₂)</code></td><td>2 mẫu độc lập</td><td>So sánh 2 tổng thể</td></tr>
+        <tr><td><span class="ch-pill p7">Ch.7</span></td><td>Sample Proportion p̂</td><td><code>x/n</code></td><td>—</td><td>Ước lượng tỷ lệ tổng thể p</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     HƯỚNG DẪN MÁY TÍNH
+═══════════════════════════ -->
+<div class="section solo" id="calc">
+  <div class="sec-body">
+    <div class="inner-title" style="font-size:1.1rem;"><span class="it-num" style="background:#1C2B3A;width:32px;height:32px;">🖩</span>Hướng Dẫn Máy Tính CASIO fx-580VN X</div>
+
+    <div class="card-grid">
+      <div class="card">
+        <h4>📍 Tính x̄, S, S², Σx, Σx²</h4>
+        <div class="calc" style="margin:8px 0 0;">
+          <div class="ct">STAT → 1-VAR MODE</div>
+          <span class="ck">MENU</span> → <span class="ck">6:Statistics</span> → <span class="ck">1: 1-Variable</span><br>
+          <span class="cc">// Nhập dữ liệu cột X:</span><br>
+          Gõ từng giá trị → <span class="ck">=</span><br><br>
+          <span class="cc">// Xem kết quả:</span><br>
+          <span class="ck">AC</span> → <span class="ck">OPTN</span> → <span class="ck">3:1-Variable Calc</span><br>
+          <span class="ck">x̄</span> = mean &nbsp; <span class="ck">xσn-1</span> = S (chia n−1)<br>
+          <span class="ck">xσn</span> = σ (chia n) &nbsp; <span class="ck">Σx</span> &nbsp; <span class="ck">Σx²</span>
+        </div>
+      </div>
+      <div class="card">
+        <h4>📍 Tính C(n,r) và P(n,r)</h4>
+        <div class="calc" style="margin:8px 0 0;">
+          <div class="ct">COMBINATION & PERMUTATION</div>
+          <span class="cc">// Tổ hợp C(n,r):</span><br>
+          Gõ <span class="ck">n</span> → <span class="ck">SHIFT</span>+<span class="ck">÷</span> (nCr) → gõ <span class="ck">r</span> → <span class="ck">=</span><br><br>
+          <span class="cc">// Hoán vị P(n,r):</span><br>
+          Gõ <span class="ck">n</span> → <span class="ck">SHIFT</span>+<span class="ck">×</span> (nPr) → gõ <span class="ck">r</span> → <span class="ck">=</span><br><br>
+          <span class="cc">// Giai thừa n!:</span><br>
+          Gõ <span class="ck">n</span> → <span class="ck">SHIFT</span>+<span class="ck">)</span> (x!) → <span class="ck">=</span>
+        </div>
+      </div>
+      <div class="card">
+        <h4>📍 Tính Xác Suất Normal N(μ,σ²)</h4>
+        <div class="calc" style="margin:8px 0 0;">
+          <div class="ct">NORMAL DISTRIBUTION</div>
+          <span class="ck">MENU</span> → <span class="ck">7:Distribution</span><br>
+          → <span class="ck">1:Normal CDF (Ncd)</span><br><br>
+          <span class="cc">// Nhập:</span><br>
+          Lower: <span class="ck">a</span> (hoặc <span class="ck">-1E99</span> nếu −∞)<br>
+          Upper: <span class="ck">b</span> (hoặc <span class="ck">1E99</span> nếu +∞)<br>
+          σ: <span class="ck">σ</span> &nbsp;&nbsp; μ: <span class="ck">μ</span><br><br>
+          <span class="cc">// Inverse Normal (tìm x khi biết p):</span><br>
+          → <span class="ck">3:Inverse Normal (InvN)</span><br>
+          Area: <span class="ck">p</span>, σ: <span class="ck">σ</span>, μ: <span class="ck">μ</span>
+        </div>
+      </div>
+      <div class="card">
+        <h4>📍 Tính Z của x̄ (CLT)</h4>
+        <div class="calc" style="margin:8px 0 0;">
+          <div class="ct">STANDARD ERROR & Z-SCORE</div>
+          <span class="cc">// Bước 1: Tính Standard Error:</span><br>
+          <span class="ck">SE = σ ÷ √n</span><br>
+          Gõ: <span class="ck">σ ÷ √(n)</span> → <span class="ck">=</span><br><br>
+          <span class="cc">// Bước 2: Tính Z:</span><br>
+          <span class="ck">Z = (x̄ − μ) ÷ SE</span><br><br>
+          <span class="cc">// Bước 3: Dùng Normal CDF:</span><br>
+          MENU → Distribution → Ncd<br>
+          σ: <span class="ck">1</span>, μ: <span class="ck">0</span> (Z ~ N(0,1))
+        </div>
+      </div>
+    </div>
+
+    <div class="tip" style="margin-top:12px;">
+      <strong>💡 Mẹo fx-580VN X:</strong> Để tính P(x̄ &gt; a) khi biết μ, σ, n → Dùng Normal CDF với σ_input = σ/√n và μ_input = μ, Lower = a, Upper = 1E99. Không cần tính Z tay!
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     BÀI TẬP VẬN DỤNG
+═══════════════════════════ -->
+<div class="section solo" id="exercises">
+  <div class="sec-body">
+    <div class="inner-title" style="font-size:1.1rem;"><span class="it-num" style="background:var(--orange);width:32px;height:32px;">✏</span>Bài Tập Vận Dụng — 3 Chương</div>
+
+    <!-- BÀI 1 -->
+    <h3 style="color:var(--c1);">📘 Bài 1 — Chapter 1: Kỹ Thuật Đếm</h3>
+    <div class="ex-box">
+      <div class="ex-title">BÀI TẬP 1.1 — Mã Sản Phẩm</div>
+      <p style="font-size:13px;">Một mã sản phẩm gồm <strong>2 chữ cái</strong> (A–Z) theo sau bởi <strong>3 chữ số</strong> (0–9). Biết chữ cái và chữ số có thể lặp lại.</p>
+      <p style="font-size:13px;"><strong>(a)</strong> Có bao nhiêu mã khác nhau? &nbsp;&nbsp; <strong>(b)</strong> Nếu chữ cái không lặp, có bao nhiêu mã?</p>
+      <div class="steps">
+        <div class="step"><div class="sn"></div><div class="sb"><strong>(a) Dùng Quy tắc nhân (có lặp):</strong><br>26 × 26 × 10 × 10 × 10 = <code>676,000 mã</code></div></div>
+        <div class="step"><div class="sn"></div><div class="sb"><strong>(b) Chữ cái không lặp → Hoán vị P(26,2):</strong><br>P(26,2) × 10³ = 26×25 × 1000 = 650 × 1000 = <code>650,000 mã</code></div></div>
+      </div>
+    </div>
+
+    <div class="ex-box">
+      <div class="ex-title">BÀI TẬP 1.2 — Kiểm Tra Lô Hàng</div>
+      <p style="font-size:13px;">Lô 15 sản phẩm có <strong>4 sản phẩm lỗi</strong>. Chọn ngẫu nhiên 3 sản phẩm để kiểm tra.</p>
+      <p style="font-size:13px;"><strong>(a)</strong> Có bao nhiêu cách chọn 3 sản phẩm? &nbsp;&nbsp; <strong>(b)</strong> Xác suất chọn được đúng 1 sản phẩm lỗi?</p>
+      <div class="steps">
+        <div class="step"><div class="sn"></div><div class="sb"><strong>(a)</strong> C(15,3) = 15!/(3!×12!) = <code>455 cách</code></div></div>
+        <div class="step"><div class="sn"></div><div class="sb"><strong>(b)</strong> P(đúng 1 lỗi) = [C(4,1)×C(11,2)] / C(15,3) = [4×55]/455 = 220/455 = <code>0.4835</code></div></div>
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <!-- BÀI 2 -->
+    <h3 style="color:var(--c6);">📗 Bài 2 — Chapter 6: Thống Kê Mô Tả</h3>
+    <div class="ex-box eg">
+      <div class="ex-title">BÀI TẬP 6.1 — Thời Gian Phản Hồi</div>
+      <p style="font-size:13px;">Thời gian phản hồi hệ thống (ms), n=10:<br><strong>125, 138, 119, 145, 132, 156, 128, 141, 133, 127</strong></p>
+      <p style="font-size:13px;">Tính: <strong>(a)</strong> x̄ &nbsp; <strong>(b)</strong> S² và S &nbsp; <strong>(c)</strong> Median &nbsp; <strong>(d)</strong> Q1, Q3, IQR &nbsp; <strong>(e)</strong> Có outlier không?</p>
+      <div class="steps">
+        <div class="step"><div class="sn"></div><div class="sb"><strong>(a) x̄:</strong> Σxᵢ = 1344 → x̄ = 1344/10 = <code>134.4 ms</code></div></div>
+        <div class="step"><div class="sn"></div><div class="sb"><strong>(b) S²:</strong> Σxᵢ² = 181,408 → S² = [181408 − (1344)²/10]/9 = [181408 − 180633.6]/9 = 774.4/9 = <code>86.04</code> → S = <code>9.28 ms</code></div></div>
+        <div class="step"><div class="sn"></div><div class="sb"><strong>(c) Median (n=10 chẵn):</strong> Sắp xếp: 119,125,127,128,132,133,138,141,145,156<br>Median = (132+133)/2 = <code>132.5 ms</code></div></div>
+        <div class="step"><div class="sn"></div><div class="sb"><strong>(d) Q1:</strong> vị trí (10+1)/4 = 2.75 → Q1 = 125 + 0.75×(127−125) = <code>126.5</code><br><strong>Q3:</strong> vị trí 3×11/4 = 8.25 → Q3 = 141 + 0.25×(145−141) = <code>142.0</code><br>IQR = 142 − 126.5 = <code>15.5 ms</code></div></div>
+        <div class="step"><div class="sn"></div><div class="sb"><strong>(e) Outlier bounds:</strong> Lower = 126.5 − 1.5×15.5 = 103.25 &nbsp; Upper = 142 + 1.5×15.5 = 165.25<br>Tất cả dữ liệu trong [103.25, 165.25] → <code>Không có outlier!</code></div></div>
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <!-- BÀI 3 -->
+    <h3 style="color:var(--c7);">📙 Bài 3 — Chapter 7: CLT & Sampling Distribution</h3>
+    <div class="ex-box ep">
+      <div class="ex-title">BÀI TẬP 7.1 — Dây Cáp Điện</div>
+      <p style="font-size:13px;">Đường kính dây cáp điện X ~ N(μ=2.50 cm, σ=0.08 cm).</p>
+      <p style="font-size:13px;"><strong>(a)</strong> P(X &gt; 2.55) với 1 dây ngẫu nhiên<br><strong>(b)</strong> P(x̄ &gt; 2.55) với mẫu n=25 dây<br><strong>(c)</strong> Tại sao P ở (b) nhỏ hơn (a)?</p>
+      <div class="steps">
+        <div class="step"><div class="sn"></div><div class="sb"><strong>(a) 1 dây — X đơn lẻ:</strong><br>Z = (2.55−2.50)/0.08 = 0.625 → P(X &gt; 2.55) = 1−Φ(0.625) = 1−0.7340 = <code>0.2660</code></div></div>
+        <div class="step"><div class="sn"></div><div class="sb"><strong>(b) Mẫu n=25 — dùng CLT:</strong><br>σ_{x̄} = 0.08/√25 = 0.08/5 = <code>0.016 cm</code></div></div>
+        <div class="step"><div class="sn"></div><div class="sb">Z = (2.55−2.50)/0.016 = 3.125 → P(x̄ &gt; 2.55) = 1−Φ(3.125) = <code>0.00089</code></div></div>
+        <div class="step"><div class="sn"></div><div class="sb"><strong>(c) Giải thích:</strong> x̄ có std error = σ/√n = 0.016 nhỏ hơn σ = 0.08 rất nhiều → x̄ ít biến thiên hơn X đơn lẻ → xác suất x̄ xa μ nhỏ hơn nhiều.</div></div>
+      </div>
+    </div>
+
+    <div class="ex-box ep">
+      <div class="ex-title">BÀI TẬP 7.2 — So Sánh Hai Dây Chuyền Sản Xuất</div>
+      <p style="font-size:13px;">Dây chuyền 1: μ₁=500g, σ₁=20g, n₁=36. Dây chuyền 2: μ₂=495g, σ₂=25g, n₂=49.<br>Tính P(x̄₁ − x̄₂ &gt; 10 g).</p>
+      <div class="steps">
+        <div class="step"><div class="sn"></div><div class="sb">E(x̄₁−x̄₂) = μ₁−μ₂ = 500−495 = <code>5 g</code></div></div>
+        <div class="step"><div class="sn"></div><div class="sb">V(x̄₁−x̄₂) = σ₁²/n₁ + σ₂²/n₂ = 400/36 + 625/49 = 11.11 + 12.76 = <code>23.87</code></div></div>
+        <div class="step"><div class="sn"></div><div class="sb">σ_{x̄₁−x̄₂} = √23.87 = <code>4.886 g</code></div></div>
+        <div class="step"><div class="sn"></div><div class="sb">Z = (10 − 5)/4.886 = <code>1.023</code></div></div>
+        <div class="step"><div class="sn"></div><div class="sb">P(x̄₁−x̄₂ &gt; 10) = 1−Φ(1.023) = <code>0.1532</code> → 15.32%</div></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     TỪ KHÓA
+═══════════════════════════ -->
+<div class="section solo" id="keywords">
+  <div class="sec-body">
+    <div class="inner-title" style="font-size:1.1rem;"><span class="it-num" style="background:var(--gold);width:32px;height:32px;">🔑</span>Từ Khóa Nhận Dạng Dạng Bài</div>
+
+    <div class="card-grid three">
+      <div>
+        <div class="kw-box">
+          <h4>Ch.1 — Permutation</h4>
+          <div class="kw-tags">
+            <span class="kt kt1">arrange</span>
+            <span class="kt kt1">xếp hàng</span>
+            <span class="kt kt1">rank</span>
+            <span class="kt kt1">order matters</span>
+            <span class="kt kt1">sequence</span>
+          </div>
+        </div>
+        <div class="kw-box">
+          <h4>Ch.1 — Combination</h4>
+          <div class="kw-tags">
+            <span class="kt kt1">choose</span>
+            <span class="kt kt1">select</span>
+            <span class="kt kt1">chọn nhóm</span>
+            <span class="kt kt1">bốc thăm</span>
+            <span class="kt kt1">committee</span>
+          </div>
+        </div>
+        <div class="kw-box">
+          <h4>Ch.1 — Designed Experiment</h4>
+          <div class="kw-tags">
+            <span class="kt kt1">treatment group</span>
+            <span class="kt kt1">placebo</span>
+            <span class="kt kt1">control group</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="kw-box">
+          <h4>Ch.6 — Mean/Variance</h4>
+          <div class="kw-tags">
+            <span class="kt kt6">calculate x̄</span>
+            <span class="kt kt6">sample variance</span>
+            <span class="kt kt6">std deviation</span>
+            <span class="kt kt6">summarize</span>
+          </div>
+        </div>
+        <div class="kw-box">
+          <h4>Ch.6 — Outlier</h4>
+          <div class="kw-tags">
+            <span class="kt kt6">box plot</span>
+            <span class="kt kt6">outlier</span>
+            <span class="kt kt6">whisker</span>
+            <span class="kt kt6">1.5·IQR rule</span>
+          </div>
+        </div>
+        <div class="kw-box">
+          <h4>Ch.6 — Biểu Đồ</h4>
+          <div class="kw-tags">
+            <span class="kt kt6">stem-and-leaf</span>
+            <span class="kt kt6">histogram</span>
+            <span class="kt kt6">frequency dist</span>
+            <span class="kt kt6">time series</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="kw-box">
+          <h4>Ch.7 — CLT</h4>
+          <div class="kw-tags">
+            <span class="kt kt7">sample of n</span>
+            <span class="kt kt7">mean weight of n</span>
+            <span class="kt kt7">average of sample</span>
+            <span class="kt kt7">n ≥ 30</span>
+          </div>
+        </div>
+        <div class="kw-box">
+          <h4>Ch.7 — Standard Error</h4>
+          <div class="kw-tags">
+            <span class="kt kt7">σ/√n</span>
+            <span class="kt kt7">sampling dist</span>
+            <span class="kt kt7">standard error</span>
+            <span class="kt kt7">variability of x̄</span>
+          </div>
+        </div>
+        <div class="kw-box">
+          <h4>Ch.7 — 2 Mẫu</h4>
+          <div class="kw-tags">
+            <span class="kt kt7">compare two groups</span>
+            <span class="kt kt7">difference of means</span>
+            <span class="kt kt7">two populations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="div"></div>
+
+    <h3>🗺️ Sơ Đồ Liên Kết 3 Chương</h3>
+    <div style="background:var(--formula-bg);border-radius:12px;padding:20px;border:1px solid var(--border);font-size:13px;">
+      <div style="display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:center;text-align:center;">
+        <div style="background:#fff;padding:16px;border-radius:12px;border:2px solid var(--c1);">
+          <div style="font-size:20px;margin-bottom:6px;">🎲</div>
+          <strong style="color:var(--c1);">Ch.1</strong><br>
+          <span style="font-size:12px;color:var(--muted);">Nền tảng:<br>Population, Sample,<br>Counting, Models</span>
+        </div>
+        <div style="font-size:24px;color:var(--muted);">→</div>
+        <div style="background:#fff;padding:16px;border-radius:12px;border:2px solid var(--c6);">
+          <div style="font-size:20px;margin-bottom:6px;">📊</div>
+          <strong style="color:var(--c6);">Ch.6</strong><br>
+          <span style="font-size:12px;color:var(--muted);">Mô tả:<br>x̄, S², S, Median,<br>Q1/Q3, IQR, Box Plot</span>
+        </div>
+        <div style="font-size:24px;color:var(--muted);">→</div>
+        <div style="background:#fff;padding:16px;border-radius:12px;border:2px solid var(--c7);">
+          <div style="font-size:20px;margin-bottom:6px;">🔮</div>
+          <strong style="color:var(--c7);">Ch.7</strong><br>
+          <span style="font-size:12px;color:var(--muted);">Suy luận:<br>Sampling Dist,<br>CLT, Standard Error</span>
+        </div>
+      </div>
+      <p style="text-align:center;margin-top:14px;color:var(--muted);font-size:12px;">Ch.1 định nghĩa Population/Sample → Ch.6 tính thống kê từ mẫu (x̄, S) → Ch.7 dùng x̄, S để suy luận về μ, σ tổng thể</p>
+    </div>
+
+    <div class="tip" style="margin-top:16px;">
+      <strong>🏆 Mẹo thi tổng hợp:</strong><br>
+      • <strong>Thấy "sample of n", "average of n"</strong> → CLT (Ch.7), dùng σ/√n<br>
+      • <strong>Thấy "a single observation"</strong> → dùng σ trực tiếp (Ch.4)<br>
+      • <strong>Thấy "calculate x̄, S²"</strong> → Ch.6, nhớ chia (n−1) cho S²<br>
+      • <strong>Thấy "how many ways"</strong> → Ch.1, phân biệt thứ tự quan trọng không<br>
+      • <strong>Thấy "outlier, box plot"</strong> → Ch.6, dùng 1.5×IQR rule
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="text-align:center;padding:24px;color:var(--muted);font-size:12px;background:var(--card);border-radius:12px;border:1px solid var(--border);margin-top:8px;">
+  <strong style="color:var(--navy);">MAS291 · Tổng Hợp Chapter 1 + 6 + 7</strong><br>
+  Descriptive Statistics, Probability Foundations & Sampling Distributions<br>
+  <span style="color:var(--orange);">Chúc bạn thi tốt! 🎯</span>
+</div>
+
+</main>
+</div>
+
+<script>
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t=document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+});
+// Highlight active nav
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      document.querySelectorAll('.topnav a').forEach(a=>a.classList.remove('act'));
+      const id=en.target.id;
+      const nav=document.querySelector(`.topnav a[href="#${id}"]`);
+      if(nav) nav.classList.add('act');
+    }
+  });
+},{threshold:0.3});
+['ch1','ch6','ch7','symbols','formulas','calc','exercises','keywords'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el) obs.observe(el);
+});
+</script>
+</body>
+</html>
